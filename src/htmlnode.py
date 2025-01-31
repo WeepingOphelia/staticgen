@@ -14,20 +14,7 @@ class HTMLNode():
     n = 0
     if self.children:
       n = len(self.children)
-    return (
-    f"""
-======================
-HTML NODE:
-======================;
-| Tag: {self.tag} 
-----------------------
-| Value: {self.value}
-----------------------
-| Children: {n}
-----------------------
-| Properties: {self.props}
-======================"""
-    )
+    return f"| HTML NODE: | Tag: {self.tag} | Value: {self.value} | Children: {n} | Properties: {self.props}"
 
   def to_html(self):
     raise NotImplementedError()
@@ -45,6 +32,9 @@ class LeafNode(HTMLNode):
   def __init__(self, tag, value, props=None):
     super().__init__(tag=tag, value=value, props=props)
 
+  def __repr__(self):
+    return f"| LEAF NODE: | Tag: {self.tag} | Value: {self.value} | Properties: {self.props}"
+
   def to_html(self):
     if not self.value:
       raise ValueError("leaf must have value")
@@ -56,6 +46,10 @@ class LeafNode(HTMLNode):
 class ParentNode(HTMLNode):
   def __init__(self, tag, children, props=None):
     super().__init__(tag, children=children, props=props)
+
+  def __repr__(self):
+    n = len(self.children)
+    return f"| PARENT NODE: | Tag: {self.tag} | Value: {self.value} | Children: {n} | Properties: {self.props}"
 
   def to_html(self):
     if not self.tag:
