@@ -20,7 +20,8 @@ def split_delimiter(old_nodes, delimiter, text_type):
           raise Exception("invalid markdown syntax")
         i = len(delimiter)
         new_text = [node.text[:start], node.text[start + i:end], node.text[end + i:]]
-        new_nodes.extend([TextNode(new_text[0], TextType.NORMAL), TextNode(new_text[1], text_type), TextNode(new_text[2], TextType.NORMAL)])
+        new_text_nodes = filter(lambda x: x.text, [TextNode(new_text[0], TextType.NORMAL), TextNode(new_text[1], text_type), TextNode(new_text[2], TextType.NORMAL)]) 
+        new_nodes.extend(new_text_nodes)
       else:
         new_nodes.append(node)
   return new_nodes

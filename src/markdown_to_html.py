@@ -20,8 +20,7 @@ def markdown_to_html_node(markdown):
                 nodes.append(ParentNode(tag=tag, children = text_to_children(text)))
             case "quote":
                 tag = "blockquote"
-                text = block.lstrip(">").strip()
-
+                text = "".join([line.strip(" ") for line in block.lstrip(">").strip().split(">")])
                 nodes.append(ParentNode(tag=tag, children = text_to_children(text)))
             case "code":
                 tag = "pre"
@@ -30,7 +29,7 @@ def markdown_to_html_node(markdown):
                 nodes.append(ParentNode(tag=tag, children = [LeafNode(tag=tag1, value=text)]))
             case "unordered_list":
                 tag = "ul"
-                children = [ParentNode(tag="li", children = text_to_children(line.lstrip("*-").strip())) for line in block.split("\n") if line.lstrip("*-")]
+                children = [ParentNode(tag="li", children = text_to_children(line.lstrip("*-").strip())) for line in block.split("\n") if line.lstrip("*-").strip()]
                 nodes.append(ParentNode(tag=tag, children=children))
             case "ordered_list":
                 tag = "ol"
